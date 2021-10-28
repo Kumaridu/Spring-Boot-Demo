@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset = "ISO-8859-1" />
+    <link href = "css/styles.css" rel = "stylesheet"/>
+    <title>Spring Boot Application</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<h1 class="text-center text-yellow-800 font-bold text-3xl mb-8">Some of the programming languages </h1>
+<div class="m-3">
+    <div class="flex flex-col">
+        <div class="w-full">
+            <div class="border-b border-gray-200 shadow">
+                <table class="table-auto w-full">
+                    <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-2 text-xs text-gray-500">
+                            Name
+                        </th>
+                        <th class="px-6 py-2 text-xs text-gray-500">
+                            Initial Release Date
+                        </th>
+                        <th class="px-6 py-2 text-xs text-gray-500">
+                            Latest Release Date
+                        </th>
+                        <th class="px-6 py-2 text-xs text-gray-500">
+                            Author
+                        </th>
+                        <th class="px-6 py-2 text-xs text-gray-500">
+                            Edit
+                        </th>
+                        <th class="px-6 py-2 text-xs text-gray-500">
+                            Delete
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    <tr class="whitespace-nowrap" th:each="language: ${programming}">
+                        <td th:text="${language.name}" class="px-6 py-4"/>
+                        <td th:text="${language.initialReleaseDate}" class="px-6 py-4"/>
+                        <td th:text="${language.lastReleaseDate}" class="px-6 py-4"/>
+                        <td th:text="${language.author}" class="px-6 py-4"/>
+                        <td class="px-6 py-4">
+                            <a th:href="@{/edit/{id}(id=${language.programmingLanguageId})}" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Edit</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a th:href="@{/delete/{id}(id=${language.programmingLanguageId})}" class="px-4 py-1 text-sm text-white bg-red-400 rounded">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex content-end">
+    <a th:href="@{/add}" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Add Programming Language</a>
+</div>
+</body>
+</html>

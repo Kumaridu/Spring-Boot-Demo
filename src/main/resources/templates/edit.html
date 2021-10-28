@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset = "ISO-8859-1" />
+    <link href = "css/styles.css" rel = "stylesheet"/>
+    <title>Spring Boot Application</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<form action="#"
+    th:action="@{/edit/{id}(id=${language.programmingLanguageId})}"
+    th:object="${language}" method="post">
+
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <label for="releaseDate">Initial Release Date</label>
+    <input type="text" th:field="*{initialReleaseDate}" id="releaseDate" placeholder="Initial Release Date">
+    <label for="latestDate">Initial Release Date</label>
+    <input type="text" th:field="*{lastReleaseDate}" id="latestDate" placeholder="Latest Release Date">
+    <label for="author">Author</label>
+    <input type="text" th:field="*{author}" id="author" placeholder="Author">
+    <input type="hidden" th:field="*{programmingLanguageId}">
+    <input type="submit" value="Save Changes">
+
+</form>
+</body>
+</html>

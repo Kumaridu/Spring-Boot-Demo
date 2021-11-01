@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Home page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div th:replace="header :: header">...</div>
+<div th:text="${language.name}"></div>
+<h1>Let's see it works or not</h1>
+<div layout:fragment="content">
+    <div th:text="${language.name}"></div>
+</div>
+
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>

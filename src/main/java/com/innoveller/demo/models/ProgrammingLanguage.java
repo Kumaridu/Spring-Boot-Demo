@@ -1,31 +1,39 @@
 package com.innoveller.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.OptBoolean;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "programmingLanguageId")
-
 public class ProgrammingLanguage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "programming_language_id")
     private Long programmingLanguageId;
 
+
+    @NotEmpty(message = "Please enter the name")
     private String name;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Please enter the first release date")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "initial_release_date")
     private Date initialReleaseDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Please enter the latest release date")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "last_release_date")
     private Date lastReleaseDate;
 
@@ -37,6 +45,7 @@ public class ProgrammingLanguage {
     )
     private List<Paradigm> paradigms;
 
+    @NotEmpty(message = "Please enter the author")
     private String author;
 
     public ProgrammingLanguage() {

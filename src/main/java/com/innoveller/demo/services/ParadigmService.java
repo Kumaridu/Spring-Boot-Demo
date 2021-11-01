@@ -4,6 +4,7 @@ import com.innoveller.demo.models.Paradigm;
 import com.innoveller.demo.repositories.ParadigmRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ParadigmService {
     private ParadigmRepository repository;
 
     public List<Paradigm> findAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC, ("paradigmId")));
     }
 
     public Paradigm findById(Long id) {

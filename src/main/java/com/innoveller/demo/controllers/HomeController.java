@@ -7,9 +7,15 @@ import com.innoveller.demo.services.ProgrammingLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -29,29 +35,56 @@ public class HomeController {
     }
 
     @GetMapping("/add")
-    public String programmingLanguageForm(Model model) {
+    public String programmingLanguageForm(Model model, ProgrammingLanguage language ) {
+
         List<Paradigm> paradigms = paradigmService.findAll();
+//        List<Paradigm> sorted = paradigms.stream()
+//                .sorted(Comparator.comparing(paradigm -> paradigm.getName()))
+//                .collect(Collectors.toList());
         model.addAttribute("paradigmList", paradigms);
-        model.addAttribute("language",  new ProgrammingLanguage());
+        model.addAttribute("language",  language);
         return "addProgramming";
     }
 
     @PostMapping("/add")
-    public String programmingLanguageSubmit(ProgrammingLanguage language) {
-        System.out.println("Hi I am paradigm:" +language.getParadigms().get(0).getName());
+    public String programmingLanguageSubmit(@Valid @ModelAttribute("language") ProgrammingLanguage language, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Paradigm> paradigms = paradigmService.findAll();
+            model.addAttribute("paradigmList", paradigms);
+            return "addProgramming";
+        }
         programmingLanguageService.save(language);
         return "redirect:/";
     }
 
+//    @PostMapping("/add")
+//    public String programmingLanguageSubmit(@Valid @ModelAttribute("language") ProgrammingLanguage language, BindingResult bindingResult, Model model) {
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("language", language);
+//            return "redirect:/add";
+//        }
+//        programmingLanguageService.save(language);
+//        return "redirect:/";
+//    }
+
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         ProgrammingLanguage language = programmingLanguageService.findById(id);
+        List<Paradigm> paradigms = paradigmService.findAll();
+        model.addAttribute("paradigmList", paradigms);
         model.addAttribute("language", language);
         return "edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String handleUpdateForm(@PathVariable Long id, ProgrammingLanguage language) {
+    public String handleUpdateForm(@PathVariable Long id,
+                                   @Valid @ModelAttribute("language") ProgrammingLanguage language,
+                                   BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<Paradigm> paradigms = paradigmService.findAll();
+            model.addAttribute("paradigmList", paradigms);
+            return "edit";
+        }
         programmingLanguageService.update(language);
         return "redirect:/";
     }
@@ -60,5 +93,25 @@ public class HomeController {
     public String handleDelete(@PathVariable Long id) {
         programmingLanguageService.delete(id);
         return "redirect:/";
+    }
+
+
+    @GetMapping("/test")
+    public String getTemplate(){
+        return "templateTest";
+    }
+
+    @GetMapping("/test2")
+    public String getTemplate2(Model model){
+        ProgrammingLanguage language = programmingLanguageService.findById(1l);
+        model.addAttribute("language", language);
+        System.out.println("Hello");
+        System.out.println("Hot reload testing 222");
+        return "hello";
+    }
+
+    @GetMapping("/test3")
+    public String test3(Model model) {
+        return "layout";
     }
 }

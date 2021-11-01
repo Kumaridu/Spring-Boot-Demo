@@ -1,69 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
 <head>
     <meta charset = "ISO-8859-1" />
     <link href = "css/styles.css" rel = "stylesheet"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Spring Boot Application</title>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
-          rel="stylesheet"/>
 </head>
 <body>
- <form class="w-full max-w-lg" action="#" th:action="@{/add}" th:object="${language}" method="post">
-     <div class="flex flex-wrap -mx-3 mb-6">
-         <div class="w-full px-3">
-             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+<div layout:fragment="content">
+ <h1 class="font-bold mb-4">Add New Programming Language</h1>
+ <div class="bg-gray-50 shadow rounded-lg px-4 py-2">
+     <form action="#" th:action="@{/add}" th:object="${language}" method="post"
+           class="mb-0 space-y-6">
+         <div>
+             <label for="name" class="block text-sm font-bold text-gray-700">
                  Programming Language Name
              </label>
-             <input th:field="*{name}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-first-name" type="text" placeholder="Name">
-         </div>
-     </div>
-     <div class="flex flex-wrap -mx-3 mb-6">
-         <div class="w-full px-3">
-             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                 First Release Date
-             </label>
-             <input th:field="*{initialReleaseDate}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="First Release Date">
-         </div>
-     </div>
-     <div class="flex flex-wrap -mx-3 mb-6">
-         <div class="w-full px-3">
-             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="latest-date">
-                 Latest Release Date
-             </label>
-             <input th:field="*{lastReleaseDate}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="latest-date" type="text" placeholder="Latest Release Date">
-         </div>
-     </div>
-     <div class="flex flex-wrap -mx-3 mb-6">
-         <div class="w-full px-3">
-             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="latest-date">
-                 Author
-             </label>
-             <input th:field="*{author}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="author" type="text" placeholder="Author">
-         </div>
-     </div>
-     <div class="block">
-         <span class="text-gray-700">Paradigms</span>
-         <div class="mt-2">
-             <div th:each="paradigm,ind: ${paradigmList}">
-                 <label class="inline-flex items-center">
-                     <input type="checkbox" class="form-checkbox"
-                            th:field="*{paradigms}"
-                            th:value="${paradigm.paradigmId}"
-                            th:checked="${ind.index} == 1"/>
-                     <span class="ml-2" th:text="${paradigm.name}"></span>
-                 </label>
+             <div class="mt-1">
+                 <input th:field="*{name}" type="text" placeholder="Name" id="name"
+                        class="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:border-indigo-500"/>
+                 <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-600"></div>
              </div>
          </div>
-     </div>
-     <div class="px-4 py-3 text-right sm:px-6">
-         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-             Save
-         </button>
-     </div>
-
- </form>
+         <div>
+             <label for="initial" class="block text-sm font-bold text-gray-700">
+                 First Release Date
+             </label>
+             <div class="mt-1">
+                 <input th:value="${#calendars.format(language.initialReleaseDate, 'dd-MM-yyyy')}"
+                        type="text" placeholder="dd-mm-yyyy" id="initial" name="initialReleaseDate"
+                        class="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:border-indigo-500"/>
+                 <div th:if="${#fields.hasErrors('initialReleaseDate')}" th:errors="*{initialReleaseDate}" class="text-red-600"></div>
+             </div>
+         </div>
+         <div>
+             <label for="latest" class="block text-sm font-bold text-gray-700">
+                 Latest Release Date
+             </label>
+             <div class="mt-1">
+                 <input th:value="${#calendars.format(language.lastReleaseDate, 'dd-MM-yyyy')}"
+                         type="text" placeholder="dd-mm-yyyy" id="latest" name="lastReleaseDate"
+                         class="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:border-indigo-500"/>
+                 <div th:if="${#fields.hasErrors('lastReleaseDate')}" th:errors="*{lastReleaseDate}" class="text-red-600"></div>
+             </div>
+         </div>
+         <div>
+             <label for="author" class="block text-sm font-bold text-gray-700">
+                 Author
+             </label>
+             <div class="mt-1">
+                 <input  th:value="${language.author}" type="text" placeholder="Author" id="author" name="author"
+                        class="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:border-indigo-500"/>
+                 <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text-red-600"></div>
+             </div>
+         </div>
+         <div>
+             <span class="text-sm font-bold text-gray-700 block">Paradigms</span>
+             <div class="mt-2">
+                 <div th:each="paradigm,ind: ${paradigmList}">
+                     <label class="inline-flex items-center">
+                         <input type="checkbox" class="form-checkbox" name="paradigms"
+                                th:value="${paradigm.paradigmId}"/>
+                         <span class="ml-2" th:text="${paradigm.name}"></span>
+                     </label>
+                 </div>
+             </div>
+         </div>
+         <div class="text-right py-2 sm:px-6">
+             <button type="submit"
+                     class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                 Save
+             </button>
+         </div>
+     </form>
+ </div>
+</div>
 </body>
 </html>

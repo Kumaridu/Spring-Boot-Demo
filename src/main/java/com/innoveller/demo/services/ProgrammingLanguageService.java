@@ -4,6 +4,7 @@ import com.innoveller.demo.models.ProgrammingLanguage;
 import com.innoveller.demo.repositories.ProgrammingLanguageRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ProgrammingLanguageService {
     private ProgrammingLanguageRepository repository;
 
     public List<ProgrammingLanguage> findAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC, ("programmingLanguageId")));
     }
 
     public ProgrammingLanguage findById(Long id) {

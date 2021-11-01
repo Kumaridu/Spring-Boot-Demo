@@ -7,9 +7,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "paradigmId")
 public class Paradigm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +14,6 @@ public class Paradigm {
     private Long paradigmId;
 
     private String name;
-
-    @ManyToMany(mappedBy = "paradigms")
-    private List<ProgrammingLanguage> languageList;
 
     public Paradigm() {
     }
@@ -38,13 +32,5 @@ public class Paradigm {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<ProgrammingLanguage> getLanguageList() {
-        return languageList;
-    }
-
-    public void setLanguageList(List<ProgrammingLanguage> languageList) {
-        this.languageList = languageList;
     }
 }

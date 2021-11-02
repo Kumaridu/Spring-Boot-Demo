@@ -11,6 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class ProgrammingLanguage {
             joinColumns = @JoinColumn(name="programming_language_id"),
             inverseJoinColumns = @JoinColumn(name="paradigm_id")
     )
-    private List<Paradigm> paradigms;
+    private List<Paradigm> paradigms = new ArrayList<>();
 
     @NotEmpty(message = "Please enter the author")
     private String author;

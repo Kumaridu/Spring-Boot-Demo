@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Home page</title>
     <meta charset="UTF-8"/>
@@ -54,7 +56,10 @@
                 <button type="button"
                         class="inline-flex justify-center items-center w-full px-4 py-1 font-medium outline-none"
                         id="menu-button">
-                    <span><i class="fas fa-person ml-2"></i> Sindhu </span>
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <div sec:authorize="isAuthenticated()" class="ml-2">
+                        <span sec:authentication="name"></span>
+                    </div>
                     <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                               clip-rule="evenodd"/>
@@ -63,7 +68,7 @@
                 <div id="menu-dropdown" class="absolute right-2 border w-64 bg-white rounded-md shadow-lg hidden">
                     <div class="py-2 text-center">
                         <div class="block px-2 py-2 text-sm text-gray-500">oceansindh200@gmail.com</div>
-                        <div class="block px-3 py-1 uppercase">super_admin</div>
+                        <div sec:authentication="principal.authorities" class="block px-3 py-1 uppercase"></div>
                         <hr>
                         <div class="block px-3 pt-1 menu-item">
                             <a th:href="@{/logout}">

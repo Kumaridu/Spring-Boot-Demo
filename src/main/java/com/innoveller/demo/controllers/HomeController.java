@@ -38,9 +38,6 @@ public class HomeController {
     public String programmingLanguageForm(Model model, ProgrammingLanguage language ) {
 
         List<Paradigm> paradigms = paradigmService.findAll();
-//        List<Paradigm> sorted = paradigms.stream()
-//                .sorted(Comparator.comparing(paradigm -> paradigm.getName()))
-//                .collect(Collectors.toList());
         model.addAttribute("paradigmList", paradigms);
         model.addAttribute("language",  language);
         return "addProgramming";
@@ -57,23 +54,13 @@ public class HomeController {
         return "redirect:/";
     }
 
-//    @PostMapping("/add")
-//    public String programmingLanguageSubmit(@Valid @ModelAttribute("language") ProgrammingLanguage language, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("language", language);
-//            return "redirect:/add";
-//        }
-//        programmingLanguageService.save(language);
-//        return "redirect:/";
-//    }
-
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         ProgrammingLanguage language = programmingLanguageService.findById(id);
         List<Paradigm> paradigms = paradigmService.findAll();
         model.addAttribute("paradigmList", paradigms);
         model.addAttribute("language", language);
-        return "edit";
+        return "editProgramming";
     }
 
     @PostMapping("/edit/{id}")
@@ -83,7 +70,7 @@ public class HomeController {
         if(bindingResult.hasErrors()) {
             List<Paradigm> paradigms = paradigmService.findAll();
             model.addAttribute("paradigmList", paradigms);
-            return "edit";
+            return "editProgramming";
         }
         programmingLanguageService.update(language);
         return "redirect:/";
@@ -95,23 +82,8 @@ public class HomeController {
         return "redirect:/";
     }
 
-
-    @GetMapping("/test")
-    public String getTemplate(){
-        return "templateTest";
-    }
-
-    @GetMapping("/test2")
-    public String getTemplate2(Model model){
-        ProgrammingLanguage language = programmingLanguageService.findById(1l);
-        model.addAttribute("language", language);
-        System.out.println("Hello");
-        System.out.println("Hot reload testing 222");
-        return "hello";
-    }
-
     @GetMapping("/test3")
-    public String test3(Model model) {
-        return "layout";
+    public String showHello() {
+        return "layoutTest/hello";
     }
 }

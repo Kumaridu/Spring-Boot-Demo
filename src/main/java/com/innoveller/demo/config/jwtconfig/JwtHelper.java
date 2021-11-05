@@ -1,4 +1,4 @@
-package com.innoveller.demo.jwtconfig;
+package com.innoveller.demo.config.jwtconfig;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

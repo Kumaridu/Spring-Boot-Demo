@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<div th:replace="header :: header">...</div>
-<div th:text="${language.name}"></div>
+<div th:replace="layoutTest/header :: header">...</div>
 <h1>Let's see it works or not</h1>
 <div layout:fragment="content">
-    <div th:text="${language.name}"></div>
+    <div th:text="It will goes here.....">It will goes here.....</div>
 </div>
 
-<div th:replace="footer :: footer"></div>
+<div th:replace="layoutTest/footer :: footer"></div>
 
 </body>
 </html>

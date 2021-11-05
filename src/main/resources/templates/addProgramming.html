@@ -29,7 +29,7 @@
                  First Release Date
              </label>
              <div class="mt-1">
-                 <input th:value="${#calendars.format(language.initialReleaseDate, 'dd-MM-yyyy')}"
+                 <input th:field="*{initialReleaseDate}"
                         type="text" placeholder="dd-mm-yyyy" id="initial" name="initialReleaseDate"
                         class="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:border-indigo-500"/>
                  <div th:if="${#fields.hasErrors('initialReleaseDate')}" th:errors="*{initialReleaseDate}" class="text-red-600"></div>
@@ -40,7 +40,7 @@
                  Latest Release Date
              </label>
              <div class="mt-1">
-                 <input th:value="${#calendars.format(language.lastReleaseDate, 'dd-MM-yyyy')}"
+                 <input th:field="*{lastReleaseDate}"
                          type="text" placeholder="dd-mm-yyyy" id="latest" name="lastReleaseDate"
                          class="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:border-indigo-500"/>
                  <div th:if="${#fields.hasErrors('lastReleaseDate')}" th:errors="*{lastReleaseDate}" class="text-red-600"></div>

@@ -1,6 +1,5 @@
-package com.innoveller.demo.security;
+package com.innoveller.demo.config.securityConfig;
 
-import com.innoveller.demo.jwtconfig.JwtRequestFilter;
 import com.innoveller.demo.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 public class MultipleHttpSecurityConfig {
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-
+    private static final String API_KEY_AUTH_HEADER_NAME = "Authorization";
+//    @Autowired
+//    private JwtRequestFilter jwtRequestFilter;
+//
     @Autowired
     private MyUserDetailsService userDetailsService;
 
@@ -35,29 +35,41 @@ public class MultipleHttpSecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            ApiKeyAuthFilter filter = new ApiKeyAuthFilter(API_KEY_AUTH_HEADER_NAME);
+            filter.setAuthenticationManager(new ApiKeyAuthManager());
 //            http.csrf().disable()
 //                    .authorizeRequests().antMatchers("/api/authenticate").permitAll()
 //                    .antMatchers("/api/**")
 //                    .authenticated();
 //
 //            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//            http.csrf().disable()
+//                    .antMatcher("/api/**")
+//                    .authorizeRequests().antMatchers("/api/authenticate").permitAll().and()
+//                    .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
+//
+//            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-            http.csrf().disable()
-                    .antMatcher("/api/**")
-                    .authorizeRequests().antMatchers("/api/authenticate").permitAll().and()
-                    .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
+//            http.antMatcher("/api/**")
+//                    .httpBasic().realmName("My org ream")
+//                    .and()
+//                    .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
-
-//         http.csrf().disable().antMatcher("/api/**")
-//                 .authorizeRequests(authorize -> {
-//                     authorize.antMatchers("/api/authenticate").permitAll();
-//                     authorize.anyRequest().authenticated();
-//                 })
-//                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                http.antMatcher("/api/**").
+                        csrf().
+                        disable().
+                        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                        and()
+                        .addFilter(filter)
+                        .authorizeRequests()
+                        .anyRequest()
+                        .authenticated();
         }
+
+
 
         @Bean
         public PasswordEncoder getPasswordEncoder() {
@@ -71,7 +83,6 @@ public class MultipleHttpSecurityConfig {
             return super.authenticationManagerBean();
         }
     }
-
 
     @Configuration
     public class FormLoginConfigurationAdapter extends WebSecurityConfigurerAdapter {

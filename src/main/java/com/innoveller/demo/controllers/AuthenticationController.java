@@ -1,6 +1,6 @@
 package com.innoveller.demo.controllers;
 
-import com.innoveller.demo.jwtconfig.JwtHelper;
+import com.innoveller.demo.config.jwtconfig.JwtHelper;
 import com.innoveller.demo.models.AuthenticationRequest;
 import com.innoveller.demo.models.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 @RestController
 public class AuthenticationController {

@@ -22,14 +22,14 @@ public class MyUserDetailsService implements UserDetailsService {
 //        List<GrantedAuthority> userAuthority = new ArrayList<>();
 //        userAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
 //
-//        User adminUser = new User("Judy", "12345", adminAuthority);
-//        User staffUser = new User("Sindhu", "45678", userAuthority);
+//        User adminUser = new User("Admin", "12345", adminAuthority);
+//        User staffUser = new User("User", "45678", userAuthority);
 
-        UserDetails adminUser = User.withUsername("Judy")
+        UserDetails adminUser = User.withUsername("Admin")
                 .password("12345")
                 .roles("ADMIN")
                 .build();
-        UserDetails staffUser = User.withUsername("Sindhu")
+        UserDetails staffUser = User.withUsername("User")
                 .password("12345")
                 .roles("USER")
                 .build();

@@ -30,12 +30,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping
-    @RequestMapping("/testReact")
-    public String testReact() {
-        return "layoutTest/index";
-    }
-
     @GetMapping("/add")
     public String programmingLanguageForm(Model model, ProgrammingLanguage language ) {
 
@@ -83,10 +77,5 @@ public class HomeController {
     public String handleDelete(@PathVariable Long id) {
         programmingLanguageService.delete(id);
         return "redirect:/";
-    }
-
-    @GetMapping("/test3")
-    public String showHello() {
-        return "layoutTest/index";
     }
 }

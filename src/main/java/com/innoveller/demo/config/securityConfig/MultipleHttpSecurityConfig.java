@@ -18,9 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class MultipleHttpSecurityConfig {
     private static final String API_KEY_AUTH_HEADER_NAME = "Authorization";
-//    @Autowired
-//    private JwtRequestFilter jwtRequestFilter;
-//
+
     @Autowired
     private MyUserDetailsService userDetailsService;
 
@@ -37,39 +35,18 @@ public class MultipleHttpSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             ApiKeyAuthFilter filter = new ApiKeyAuthFilter(API_KEY_AUTH_HEADER_NAME);
             filter.setAuthenticationManager(new ApiKeyAuthManager());
-//            http.csrf().disable()
-//                    .authorizeRequests().antMatchers("/api/authenticate").permitAll()
-//                    .antMatchers("/api/**")
-//                    .authenticated();
-//
-//            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//            http.csrf().disable()
-//                    .antMatcher("/api/**")
-//                    .authorizeRequests().antMatchers("/api/authenticate").permitAll().and()
-//                    .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
-//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
-//
-//            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-//            http.antMatcher("/api/**")
-//                    .httpBasic().realmName("My org ream")
-//                    .and()
-//                    .sessionManagement()
-//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-                http.antMatcher("/api/**").
-                        csrf().
-                        disable().
-                        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                        and()
-                        .addFilter(filter)
-                        .authorizeRequests()
-                        .anyRequest()
-                        .authenticated();
+            http.antMatcher("/api/**").
+                    cors().and().
+                    csrf().
+                    disable().
+                    sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                    and()
+                    .addFilter(filter)
+                    .authorizeRequests()
+                    .anyRequest()
+                    .authenticated();
         }
-
-
 
         @Bean
         public PasswordEncoder getPasswordEncoder() {

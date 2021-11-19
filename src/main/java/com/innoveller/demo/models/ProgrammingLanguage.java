@@ -23,7 +23,6 @@ public class ProgrammingLanguage {
     @Column(name = "programming_language_id")
     private Long programmingLanguageId;
 
-
     @NotEmpty(message = "Please enter the name")
     private String name;
 

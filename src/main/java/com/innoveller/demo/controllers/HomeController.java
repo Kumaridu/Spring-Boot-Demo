@@ -11,11 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Controller
@@ -34,6 +30,12 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping
+    @RequestMapping("/testReact")
+    public String testReact() {
+        return "layoutTest/index";
+    }
+
     @GetMapping("/add")
     public String programmingLanguageForm(Model model, ProgrammingLanguage language ) {
 
@@ -44,7 +46,8 @@ public class HomeController {
     }
 
     @PostMapping("/add")
-    public String programmingLanguageSubmit(@Valid @ModelAttribute("language") ProgrammingLanguage language, BindingResult bindingResult, Model model) {
+    public String programmingLanguageSubmit(@Valid @ModelAttribute("language") ProgrammingLanguage language,
+                                            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<Paradigm> paradigms = paradigmService.findAll();
             model.addAttribute("paradigmList", paradigms);
@@ -84,6 +87,6 @@ public class HomeController {
 
     @GetMapping("/test3")
     public String showHello() {
-        return "layoutTest/hello";
+        return "layoutTest/index";
     }
 }

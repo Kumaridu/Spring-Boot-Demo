@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 public class ApiKeyAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
     private final String headerName;
 

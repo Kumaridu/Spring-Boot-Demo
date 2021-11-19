@@ -4,9 +4,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
 
 public class ApiKeyAuthManager implements AuthenticationManager {
-    private final String  token = "5zmnlCPhCGUNZNJWOY22VM92EAhoiBYJ";
+    private final String token = "5zmnlCPhCGUNZNJWOY22VM92EAhoiBYJ";
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

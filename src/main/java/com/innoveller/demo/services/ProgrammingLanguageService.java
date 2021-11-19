@@ -29,8 +29,8 @@ public class ProgrammingLanguageService {
 
     public ProgrammingLanguage update(ProgrammingLanguage programmingLanguage) {
         ProgrammingLanguage existingLanguage = repository.getById(programmingLanguage.getProgrammingLanguageId());
-        BeanUtils.copyProperties(programmingLanguage, existingLanguage, "id");
-        return repository.saveAndFlush(existingLanguage);
+        BeanUtils.copyProperties(programmingLanguage, existingLanguage);
+        return repository.save(existingLanguage);
     }
 
     public void delete(Long id) {

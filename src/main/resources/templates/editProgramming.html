@@ -61,7 +61,7 @@
                 <div class="mt-2">
                     <div th:each="paradigm: ${paradigmList}">
                         <label class="inline-flex items-center">
-                            <input th:if="${paradigm != null}" type="checkbox" class="form-checkbox" name="paradigms"
+                            <input type="checkbox" class="form-checkbox" name="paradigms"
                                    th:value="${paradigm.paradigmId}"
                                    th:checked="${language.paradigms.contains(paradigm)}"/>
                             <span class="ml-2" th:text="${paradigm.name}"></span>
